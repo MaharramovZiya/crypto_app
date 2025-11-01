@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class CryptoDetailPage extends StatefulWidget {
+import '../../core/constants/app_colors.dart';
+import 'detail/detail_view.dart';
+
+class CryptoDetailPage extends StatelessWidget {
   final String cryptoId;
 
   const CryptoDetailPage({
@@ -9,61 +13,29 @@ class CryptoDetailPage extends StatefulWidget {
   });
 
   @override
-  State<CryptoDetailPage> createState() => _CryptoDetailPageState();
-}
-
-class _CryptoDetailPageState extends State<CryptoDetailPage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1A1A),
+        backgroundColor: AppColors.background,
         elevation: 0,
         title: const Text(
           'Crypto Details',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: AppColors.iconPrimary,
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.currency_bitcoin,
-              size: 64,
-              color: Color(0xFF6552FE),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Crypto ID: ${widget.cryptoId}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Detail page will be implemented here',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: DetailView(cryptoId: cryptoId),
     );
   }
 }

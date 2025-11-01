@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../domain/entities/crypto_coin.dart';
 import '../../../widgets/mini_chart_widget.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/router/app_router.dart';
 
 class HoldingsItem extends StatelessWidget {
   final CryptoCoin cryptoCoin;
@@ -32,13 +34,18 @@ class HoldingsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPositive = cryptoCoin.priceChangePercentage24h >= 0;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
+    return InkWell(
+      onTap: () {
+        context.push('${AppRouter.cryptoDetail}/${cryptoCoin.id}');
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
         children: [
           // Coin Image
           ClipRRect(
@@ -131,6 +138,7 @@ class HoldingsItem extends StatelessWidget {
             ],
           ),
         ],
+      ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import '../data/datasources/crypto_remote_datasource.dart';
 import '../data/repositories/crypto_repository_impl.dart';
 import '../domain/repositories/crypto_repository.dart';
 import '../domain/usecases/get_crypto_coins.dart';
+import '../domain/usecases/get_crypto_coin_by_id.dart';
 import '../services/api_service.dart';
 import 'configuration.dart';
 
@@ -33,6 +34,7 @@ Future<void> initializeDependencies() async {
   
   // Use Cases
   injector.registerLazySingleton(() => GetCryptoCoins(injector<CryptoRepository>()));
+  injector.registerLazySingleton(() => GetCryptoCoinById(injector<CryptoRepository>()));
 }
 
 Dio _createDio() {

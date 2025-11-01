@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
-class CryptoDetailPage extends StatefulWidget {
+import 'detail_view.dart';
+
+class CryptoDetailPage extends StatelessWidget {
   final String cryptoId;
 
   const CryptoDetailPage({
@@ -10,11 +12,6 @@ class CryptoDetailPage extends StatefulWidget {
     required this.cryptoId,
   });
 
-  @override
-  State<CryptoDetailPage> createState() => _CryptoDetailPageState();
-}
-
-class _CryptoDetailPageState extends State<CryptoDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,41 +28,14 @@ class _CryptoDetailPageState extends State<CryptoDetailPage> {
           ),
         ),
         leading: IconButton(
-          onPressed: () => context.go('/'),
+          onPressed: () => context.pop(),
           icon: const Icon(
             Icons.arrow_back,
             color: AppColors.iconPrimary,
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.currency_bitcoin,
-              size: 64,
-              color: AppColors.primary,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Crypto ID: ${widget.cryptoId}',
-              style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Detail page will be implemented here',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: DetailView(cryptoId: cryptoId),
     );
   }
 }

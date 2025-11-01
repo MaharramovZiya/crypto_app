@@ -65,7 +65,17 @@ class CryptoRemoteDataSourceImpl implements CryptoRemoteDataSource {
   @override
   Future<CryptoCoinModel> getCryptoCoinById(String id) async {
     try {
-      final response = await dio.get('/coins/$id');
+      final response = await dio.get(
+        '/coins/$id',
+        queryParameters: {
+          'localization': false,
+          'tickers': false,
+          'market_data': true,
+          'community_data': false,
+          'developer_data': false,
+          'sparkline': false,
+        },
+      );
 
       if (response.statusCode == 200) {
         return CryptoCoinModel.fromJson(response.data);
