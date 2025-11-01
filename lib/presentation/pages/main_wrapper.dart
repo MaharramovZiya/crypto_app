@@ -1,4 +1,5 @@
 import 'package:crypto_app/presentation/pages/branding/branding_view.dart';
+import 'package:crypto_app/presentation/pages/profile/profile_view.dart';
 import 'package:crypto_app/presentation/pages/trading/trading_view.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class _MainWrapperState extends State<MainWrapper> {
   final List<Widget> _pages = [
     const BrandingView(),
     const TradingView(),
-    const ProfilePage(),
+    const ProfileView(),
   ];
 
   @override
@@ -34,21 +35,6 @@ class _MainWrapperState extends State<MainWrapper> {
             _currentIndex = index;
           });
         },
-      ),
-    );
-  }
-}
-
-
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Profile Page'),
       ),
     );
   }

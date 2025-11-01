@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unnecessary_brace_in_string_interps
+
 import 'package:crypto_app/ui/base/base_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
