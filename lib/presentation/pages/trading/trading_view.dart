@@ -251,6 +251,7 @@ class _TradingViewState extends State<TradingView> {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
+        centerTitle: false,
         title: const Text(
           'Trading',
           style: TextStyle(
