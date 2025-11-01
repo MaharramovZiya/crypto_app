@@ -1,4 +1,5 @@
 import 'package:crypto_app/presentation/pages/branding/branding_view.dart';
+import 'package:crypto_app/presentation/pages/trading/trading_view.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/bottom_nav_bar.dart';
@@ -39,18 +40,6 @@ class _MainWrapperState extends State<MainWrapper> {
 }
 
 
-class TradingView extends StatelessWidget {
-  const TradingView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Trading Page'),
-      ),
-    );
-  }
-}
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

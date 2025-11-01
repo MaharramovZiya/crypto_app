@@ -11,7 +11,7 @@ class AppRouter {
   static const String cryptoDetail = '/crypto-detail';
 
   static final GoRouter router = GoRouter(
-    initialLocation: splash,
+    initialLocation: main,
     debugLogDiagnostics: true,
     routes: [
       // Splash Route
