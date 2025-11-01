@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants/app_colors.dart';
-import '../../bloc/profile/profile_bloc.dart';
+import 'components/profile_header.dart';
+import 'components/profile_stat_card.dart';
+import 'components/profile_menu_item.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc()..add(LoadProfileData()),
-      child: const _ProfileViewContent(),
-    );
-  }
-}
-
-class _ProfileViewContent extends StatelessWidget {
-  const _ProfileViewContent();
 
   @override
   Widget build(BuildContext context) {
@@ -37,116 +26,218 @@ class _ProfileViewContent extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context.read<ProfileBloc>().add(RefreshProfileData());
+              // Edit profile action
             },
             icon: const Icon(
-              Icons.refresh,
+              Icons.edit_outlined,
               color: AppColors.iconPrimary,
             ),
           ),
         ],
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
-          if (state is ProfileLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.progressIndicator),
-              ),
-            );
-          }
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Header
+            const ProfileHeader(
+              name: 'Alex Johnson',
+              email: 'alex.johnson@example.com',
+            ),
 
-          if (state is ProfileError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: AppColors.error,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Error: ${state.message}',
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<ProfileBloc>().add(LoadProfileData());
-                    },
-                    child: const Text('Retry'),
-                  ),
-                ],
-              ),
-            );
-          }
+            const SizedBox(height: 32),
 
-          if (state is ProfileLoaded) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.person,
-                    size: 64,
+            // Statistics Cards
+            Row(
+              children: [
+                Expanded(
+                  child: ProfileStatCard(
+                    title: 'Total Invested',
+                    value: '\$87,430.12',
+                    icon: Icons.trending_up,
                     color: AppColors.primary,
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    state.profileData['name'],
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ProfileStatCard(
+                    title: 'Total Profit',
+                    value: '\$12,450.50',
+                    icon: Icons.account_balance_wallet,
+                    color: AppColors.secondary,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    state.profileData['email'],
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    state.profileData['phone'],
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Total Invested: \$${state.profileData['totalInvested']}',
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    'Total Profit: \$${state.profileData['totalProfit']}',
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.progressIndicator),
+                ),
+              ],
             ),
-          );
-        },
+
+            const SizedBox(height: 24),
+
+            // Menu Items
+            const Text(
+              'Settings',
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            ProfileMenuItem(
+              icon: Icons.person_outline,
+              title: 'Personal Information',
+              onTap: () {
+                // Navigate to personal info
+              },
+            ),
+
+            ProfileMenuItem(
+              icon: Icons.security_outlined,
+              title: 'Security',
+              onTap: () {
+                // Navigate to security
+              },
+            ),
+
+            ProfileMenuItem(
+              icon: Icons.notifications_outlined,
+              title: 'Notifications',
+              onTap: () {
+                // Navigate to notifications
+              },
+            ),
+
+            ProfileMenuItem(
+              icon: Icons.payment_outlined,
+              title: 'Payment Methods',
+              onTap: () {
+                // Navigate to payment methods
+              },
+            ),
+
+            const SizedBox(height: 24),
+
+            const Text(
+              'Support',
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            ProfileMenuItem(
+              icon: Icons.help_outline,
+              title: 'Help Center',
+              onTap: () {
+                // Navigate to help center
+              },
+            ),
+
+            ProfileMenuItem(
+              icon: Icons.description_outlined,
+              title: 'Terms & Privacy',
+              onTap: () {
+                // Navigate to terms
+              },
+            ),
+
+            ProfileMenuItem(
+              icon: Icons.info_outline,
+              title: 'About',
+              onTap: () {
+                // Navigate to about
+              },
+            ),
+
+            const SizedBox(height: 32),
+
+            // Logout Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Logout action
+                  _showLogoutDialog(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.error.withOpacity(0.1),
+                  foregroundColor: AppColors.error,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      color: AppColors.error.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.cardBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: const Text(
+          'Logout',
+          style: TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+          'Are you sure you want to logout?',
+          style: TextStyle(
+            color: AppColors.textSecondary,
+            fontSize: 16,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              // Perform logout
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.error,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Logout'),
+          ),
+        ],
       ),
     );
   }
